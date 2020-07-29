@@ -1,0 +1,39 @@
+module.exports =  function (console, req, res) {
+  
+
+//function connect() {
+var Client = require('ssh2').Client;
+var test ={};
+
+var conn = new Client();
+conn.on('ready', function() {
+  console.log('Client :: ready');
+  conn.exec('uptime', function(err, stream) {
+    if (err) throw err; 
+    stream.on('close', function(code, signal) {
+  console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
+      conn.end();
+    }).on('data', function(data) {
+      console.log('STDOUT: ' + data);
+      
+      test.res=data;
+      
+          }).stderr.on('data', function(data) {
+      console.log('STDERR: ' + data);    });
+  });
+ 
+}).connect({
+  host: '52.26.120.11',
+  port: 22,
+  username: 'xxxx',
+  password: 'xxxx'
+})
+ //conn;
+ setTimeout(function(){
+ 
+      //console.log('test',test.res.toString())
+      //req.write(test.res.toString())
+            
+ },3000)
+ 
+};

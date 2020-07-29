@@ -1,0 +1,25 @@
+module.exports = function (context, req, res) {
+ 
+
+ if (req.query.name || (req.body && req.body.name)) {
+        context.log('Inside If');
+        context.res = {
+            // status: 200, 
+            //body: {message: "Hello " + (req.query.name || req.body.name)}
+            body: "Hello " + req.query.name
+            /*headers: {
+                'Content-Type': 'application/json'
+            }*/
+        };
+    }
+    else {
+        context.res = {
+            status: 400,
+            body: "failed"
+        };
+    }
+    
+    context.log(req.query.name);
+    context.log('Inside');
+    context.done(null, res);
+};
